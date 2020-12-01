@@ -20,6 +20,5 @@
 
 ;part 2
 ; NOTE i had to start sbcl with --dynamic-space-size 4096
-(april "a←input")
-(april "trips←,a∘.,,a∘.,a⋄44")
+(april "trips←,input∘.,,input∘.,input⋄0")
 (april "×/¨trips[(2020=+/¨trips)/⍳⍴trips]")
