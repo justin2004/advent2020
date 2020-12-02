@@ -30,6 +30,10 @@
                           'vector)))) )
        "input←i")
 
+; part 1
 (april "valid←{ count←+/⍵[3]=⍵[4] ⋄ (count≥⍵[1]) ∧ count≤⍵[2]}")
 (april "+/valid¨input")
 
+; part 2
+(april "valid←{password←⍵[4]⋄1=(password[⍵[1]]=⍵[3]) + (password[⍵[2]]=⍵[3])}")
+(april "+/valid¨input")
