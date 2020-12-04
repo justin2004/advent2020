@@ -21,5 +21,5 @@
 (april "pairs←{1 3+⍣⍵⊢1 1}¨¯1+⍳323")
 (april "goodpairs←{⍵[1],(1+31|(⍵[2]-1))}¨pairs") ; the +1 -1 game because i can't get ⎕IO←0
                                                  ; and i need to do modulus with 0 based indexing
+;       goodpairs ("good ordered pairs") have been wrapped in x since the map is stacked side by side ad infinitum
 (april "+/goodpairs {⍺⌷⍵}¨ ⊂mat") ; 276
-
