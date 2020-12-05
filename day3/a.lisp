@@ -26,35 +26,13 @@
 
 
 
-; part 2
-(april "pairs←{1 3+⍣⍵⊢1 1}¨¯1+⍳323")
-(april "slopes←5 2 ⍴ 1 1 3 1 5 1 7 1 1 2")
-(april "pairs←(2 2){⍺[1] ⍺[2]+⍣⍵⊢1 1}¨¯1+⍳323")
-(april "(2 2){⍺[1] ⍺[2]+⍣⍵⊢1 1} 3")
-(april "slopes {⍺[1] ⍺[2]+⍣⍵⊢1 1} 2")
+; part 2 
+(april "trees←{slope←⍵
+               mat←(⊃⍴input) (⊃⍴input[1]) ⍴ '#'=∊input 
+               pairs←{slope+⍣⍵⊢1 1}¨¯1+⍳⊃⍴mat
+               goodpairs←{⍵[1],(1+(2⊃⍴mat)|(⍵[2]-1))}¨pairs
+               betterpairs←((1⊃⍴mat)≥({1⊃⍵}¨goodpairs))/goodpairs
+               +/betterpairs {⍺⌷⍵}¨ ⊂mat}") 
+(april "×/trees¨ (1 1) (1 3) (1 5) (1 7) (2 1)") ; 7812180000
+; had to add the "betterpairs" step for the 2 1 slope because its line gets to the bottom faster (so we don't need as many ordered pairs)
 
-(april-f "slopes+[2] 1 2")
-
-(april-f "slopes")
-(april "pairs←{(slopes+[2])⍣⍵⊢5 2 ⍴ 1 1}¨¯1+⍳323")
-(april "pairs←{(slopes+[2])⍣⍵⊢5 2 ⍴ 1 1}¨⍳4")
-(april "pairs←{((5 2 ⍴ 1 1)+[2])⍣⍵⊢slopes}¨¯1+⍳323") ; maybe
-(april "⍴pairs")
-(april "((5 2 ⍴ 1 1)+[2])⍣1⊢slopes")
-
-(april "slopes+[2]⍣4⊢2 2")
-(april "(slopes+[2] 2 2)+[2] 2 2")
-(april "pairs←{slopes(+⍣⍵)1 1}¨⍳3")
-
-(april "f←{+[2]}")
-(april-f "(slopes+[2] 5 5)+[2] 5 5 ")
-(april "{(slopes+[2])⍣⍵⊢1 1}¨⍳2")
-(april "{(slopes,[2])⍣⍵⊢2 2}¨⍳2")
-
-(april "(5∘+) 6")
-
-(april-f "slopes,[0.5] 2  ")
-
-(april-f "slopes+slopes+slopes") ; stack them side by side
-(april-f "slopes+⍣1⊢5 2 ⍴ 1 1")
-(april "⍴slopes")
