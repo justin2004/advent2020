@@ -1,5 +1,4 @@
 (ql:quickload :april)
-(ql:quickload :cl-ppcre)
 (in-package :april)
 
 ; i've never felt solid with newlines in sed. | does not occur in the input.txt so
@@ -76,7 +75,7 @@
                    bounds←('cm' 'in' ⍳ ⊂(¯2↑⍵)) ⊃ (150 193) (59 76)
                    value←⍎(¯2↓⍵)
                    (bounds[1]≤value) ∧ value≤bounds[2] }")
-(april "hgt_valid '64cm'")
+(april "hgt_valid '194cm'")
 
 (april "⊂(¯2↑'151in') 0 ⍳ 'cm' 'in'")
 (april "'cm' 'in' ⍳ ⊂(¯2↑'151in')") ; works
@@ -93,26 +92,34 @@
     ; cid (Country ID) - ignored, missing or not.
 
 
-(april "expected_fields←'byr' 'iyr' 'eyr' 'hgt' 'hcl' 'ecl' 'pid'")
-(april "a←(¯1⌽(' '=input[8])) ⋄ a[1]←1")
-(april "(~∨\\¨':'=a⊂input[8])/¨a⊂input[8]")
-(april "input[8]")
+(april "' '=input[8]")
+(april "a←(¯1⌽(' '=input[8])) ⋄ a[1]←1⋄a")
 (april "⍴expected_fields ∩ (~∨\\¨':'=a⊂input[8])/¨a⊂input[8]")
-(april "≢'#6b5442'")
-(april "hcl_valid '#6b5442'")
-(april-f "⍸ 3 3 ⍴ 0 0 1   0 0 0    1 1 0")
-(april "∧/(1↓'#6b5442') ∊ '0123456789abcdef'")
-(april "'a'-'a'")
-(april "'#6b5442'")
+(april "(':'=a⊂input[8])")
+(april "1000100 ⊃ input[8]")
+(april "b←a⊂input[8]")
+(april "q←{x←¯1⌽(':'=⍵)⋄x[1]←1⋄x}¨b")
+(april "q∘.,b")
+(april "r←q{⍺⊂⍵}¨b") ; good
+(april "{99{⍺,⍵}¨⍵}¨r")
+(april "{99,⍵}¨r")
+(april "{{⍵[1]}¨⍵}¨r") 
+(april "hcl_valid ¯1↓1⊃({⍵[2]}¨r)") ; works but hardcoded
+(april "({⍵[2]}¨r)")
+(april "'plus' 'minus' ⍳ ⊂'plus'")
 
-(april "⎕IO←0")
-(april "⎕IO")
 
-(april "⎕D")
-(april "⎕A")
-
-(april (with (:state :count-from 0))
-       "⎕IO")
+; (april "expected_fields←'byr' 'iyr' 'eyr' 'hgt' 'hcl' 'ecl' 'pid'")
+; (april "a←(¯1⌽(' '=input[8])) ⋄ a[1]←1")
+; (april "(~∨\\¨':'=a⊂input[8])/¨a⊂input[8]")
+; (april "input[8]")
+; (april "⍴expected_fields ∩ (~∨\\¨':'=a⊂input[8])/¨a⊂input[8]")
+; (april "≢'#6b5442'")
+; (april "hcl_valid '#6b5442'")
+; (april-f "⍸ 3 3 ⍴ 0 0 1   0 0 0    1 1 0")
+; (april "∧/(1↓'#6b5442') ∊ '0123456789abcdef'")
+; (april "'a'-'a'")
+; (april "'#6b5442'")
 
 
 
