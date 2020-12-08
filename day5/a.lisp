@@ -17,4 +17,11 @@
 ; part 1
 (april "ids←2(⊥⍤1) ('R'=↑input) ∨ 'B'=↑input ⋄ ¯1↑ids[⍋ids]") ; works in april
 ; (april "¯1↑ids[⍋ids←2(⊥⍤1) ('R'=↑input) ∨ 'B'=↑input]") ; works in dyalog
+;       this should work in april after https://github.com/phantomics/april/issues/92
+
+
+; part 2
+(april "passes←ids[⍋ids]") 
+(april "1↑¯1+(passes - 83+⍳⍴passes)/passes")
+; (april "(1⌽passes - 83+⍳⍴passes)/passes") ; needed this to look at the missing pass
 
