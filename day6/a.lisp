@@ -3,7 +3,7 @@
 
 ; cat input.txt  | tr "\n" "|" | sed -e 's/||/\n/g' -e 's/|//g' > input1.txt"
 ; cat input.txt  | tr "\n" "|" | sed -e 's/||/\n/g' > input2.txt"
-(setf *i* (with-open-file (s "day6/input-sample2.txt" 
+(setf *i* (with-open-file (s "day6/input2.txt" 
                              :direction :input)
             (loop 
               :for line = (read-line s nil)
@@ -38,7 +38,38 @@
 (april "i←'ab|ac'⋄map←'|'=i⋄map[1]←1⋄∩/map⊂i") ; works
 (april "i←'ab|ac'⋄map←'|'=i⋄map[1]←1⋄map⊂i") ; works
 (april "i←input ⋄ map←'|'=¨i ⋄ map1←1,¨1↓¨map ⋄ map1⊂¨i") ; works on multiple
-(april "i←input ⋄ map←'|'=¨i ⋄ map1←1,¨1↓¨map ⋄ ∩/(map1⊂¨i)[1]")
+(april "i←input ⋄ map←'|'=¨i ⋄ map1←1,¨1↓¨map ⋄ j←∩/¨(map1⊂¨i) ⋄ +/⊃¨⍴¨⊃¨j") ; good
+(april "i←input ⋄ map←'|'=¨i ⋄ map1←1,¨1↓¨map ⋄ j←∩/¨(map1⊂¨i) ⋄ +/≢¨⊃¨j") ; good   testing
+(april "i←input ⋄ map←'|'=¨i ⋄ map1←1,¨1↓¨map ⋄ j←∩/¨(map1⊂¨i) ⋄ k←⊃¨j ⋄ +/≢¨(~' '≡¨k)/k ⋄ k ") ; good  ??   way too log
+(april "i←input ⋄ map←'|'=¨i ⋄ map1←1,¨1↓¨map ⋄ j←∩/¨(map1⊂¨i) ⋄ k←⊃¨j ⋄ +/≢¨(~(⊂' ')≡¨k)/k ⋄ k  ") ; works for the example
+(april "i←input ⋄ map←'|'=¨i ⋄ map1←1,¨1↓¨map ⋄ j←∩/¨(map1⊂¨i) ⋄ k←j ⋄ +/≢¨(~(⊂' ')≡¨k)/k  ⋄ k   ") 
+(april "i←input ⋄ map←'|'=¨i ⋄ map1←1,¨1↓¨map ⋄ j←∩/¨(map1⊂¨i) ⋄ k←j ⋄ +/≢¨k        ") ; good  ??
+(april "i←input ⋄ map←'|'=¨i ⋄ map1←1,¨1↓¨map ⋄ j←∩/¨(map1⊂¨i) ⋄ k←j ⋄ ≢¨(~(⊂'')≡¨k)/k ⋄ ≢¨k[1 2 3]      ") ; good  ??
+
+(april "i←input[425 + ⍳4] ⋄ map←'|'=¨i ⋄ map1←1,¨1↓¨map ⋄ j←(map1⊂¨i) ⋄ ∩/¨j")  ; but not here
+(april "i←input[425 + ⍳4] ⋄ map←'|'=¨i ⋄ map1←1,¨1↓¨map ⋄ j←(map1⊂¨i) ⋄ ≢¨∩/¨j  ")  ; but not here
+; ok the thing that works for the example works for the actual input except for the 
+; this       #(#0A#0A"fjiylvzn"       which gets double nested and then tally only counts it as 1
+
+(april "i←inputsample ⋄    map←'|'=¨i ⋄ map1←1,¨1↓¨map ⋄ j←(map1⊂¨i) ⋄ ∩/¨j ")  ; why does does double nest?
+(april "i←inputsample ⋄    map←'|'=¨i ⋄ map1←1,¨1↓¨map ⋄ j←map1⊂¨i ⋄ ≢¨∩/¨j ") 
+(april "input[40 + ⍳4]")
+(april "inputsample")
+(april "input[426]")
+; 3194 too low
+; 3247 too low
+; 7 2 4
+(april "'djfjd'")
+(equal #\  (elt  " " 0))
+(april "⊃''")
+(april "≢'a'")
+(april "⍴⊃∩/'a|' 'a'")
+(april "⍴'a|' ∩ 'a'")
+(april (demo))
+(april "i←input ⋄ map←'|'=¨i ⋄ map1←1,¨1↓¨map ⋄ (map1⊂¨i) ") ; good   testing
+(april "'a'∩'|b'∩'|c'")
+(april "i←input ⋄ map←'|'=¨i ⋄ map1←1,¨1↓¨map ⋄ j←∩/¨(map1⊂¨i) ⋄ +/⊃¨⍴¨j") ; good
+(april "i←input ⋄ map←'|'=¨i ⋄ map1←1,¨1↓¨map ⋄ (map1⊂¨i)")
 (april "i←input ⋄ map←'|'=¨i ⋄ map1←1,¨1↓¨map ⋄ {∩/⍵}¨map1⊂¨i")
 (april "input")
 (april "apple←3 ⍴ ⊂⍳10 ⋄ (1↑⊃apple[1])←99")
@@ -53,3 +84,6 @@
 
 (april "⊃∩/aa[1]")
 (april "aa[1]")
+
+
+
