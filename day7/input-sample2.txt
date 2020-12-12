@@ -1,0 +1,7 @@
+lightred|brightwhite|mutedyellow
+darkorange|brightwhite|mutedyellow
+brightwhite|shinygold
+mutedyellow|shinygold|fadedblue
+shinygold|darkolive|vibrantplum
+darkolive|fadedblue|dottedblack
+vibrantplum|fadedblue|dottedblack
