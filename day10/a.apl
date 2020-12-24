@@ -17,7 +17,7 @@ idxs←3=(1⌽vv1) - vv1   ⍝ these indexes can be the guaranteed break points 
 vv2←(1+idxs)/vv1    ⍝  duplicate the break points 
 idxs2←1,1↓¯1⌽0=(1⌽vv2)-vv2  ⍝ get the different between each item and where the difference is 0
                             ⍝ mark those places (as they will serve as the places to partition)
-														⍝ also mark the 1st because partitioned enclose needs it
+                            ⍝ also mark the 1st because partitioned enclose needs it
 ⎕PP←30
 ×/fun¨idxs2⊂vv2  ⍝ make subsuquences, and for each apply the function
 ⍝ 13816758796288

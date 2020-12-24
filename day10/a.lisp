@@ -2,7 +2,7 @@
 (ql:quickload :april)
 (in-package :april)
 
-(setf *i* (with-open-file (s "day10/input-sample.txt" 
+(setf *i* (with-open-file (s "day10/input.txt" 
                              :direction :input)
             (loop 
               :for line = (read-line s nil)
@@ -17,7 +17,6 @@
        "input←i")
 
 
-
 ; part 1
 (april "a←{⍎⍵}¨input")
 (april "b←0,(⊂∘⍋⌷⊢)a")
@@ -29,28 +28,3 @@
 
 
 ; part 2 is in dyalog  in "a.apl"
-(april "c←b,3+(⍴b)⌷b")
-(april "c")
-(april "d←{⌿∘⍵¨↓⌽⍉2⊥⍣¯1⊢¯1+⍳2*≢⍵}c ⋄ 0")
-(april "{⌿∘⍵¨↓⌽⍉2⊥⍣¯1⊢¯1+⍳2*≢⍵}'abc'")
-
-(april "((⍴c)⍴1)/c")
-(april "(⍴c)⍴1")
-(april "(⍳⍴c) ∘.⌷c")
-(april "1 2 3 ∘.⌷⊂c")
-; 0 1 1 1   7 
-; 1 0 1 1   11
-; 1 1 0 1   13
-; 1 1 1 0   14
-; 1 1 1 1   15
-(april "2⊥1 1 1 0")
-(april "3⌷c")
-(april-f "(⍳3)∘.,⍳3")
-
-(april "⍴+.×⌿?2 30 30⍴10")
-(april "+.×⌿?2 5 5⍴10")
-
-
-(april "↓⍉1 2 3 4")
-(april "↓1 2 3 4")
-(april "↓5 2⍴8")
