@@ -1,5 +1,8 @@
 ⍝  part 2    in dyalog because i couldn't do the powerset function in april
 
+⍝ fun gets the powerset of a vector (excluding the first and last item).
+⍝ for each subset get the diff from the next item and if all diffs are 1, 2, or 3 
+⍝ then that counts as a working sequence of adapters.  fun returns the number of valid working subsets.
 fun←{ input←⍵ ⋄ first←1↑input ⋄ last←¯1↑input ⋄ input←1↓input ⋄ input←¯1↓input ⋄  psv←{⌿∘⍵¨↓⌽⍉2⊥⍣¯1⊢¯1+⍳2*≢⍵}input ⋄ +/∧/¨{(⍵=1)∨(⍵=2)∨⍵=3}¨¯1↓¨{(1⌽⍵)-⍵}¨{first,⍵,last}¨psv }
 
 ⍝ sample←0 1 4 5 6 7 10 11 12 15 16 19 22 ⋄ fun sample
@@ -8,12 +11,14 @@ input←115 134 121 184 78 84 77 159 133 90 71 185 152 165 39 64 85 50 20 75 2 1
 ⍝ the function "fun" could solve the problem directly if my dyalog workspace didn't run out of memory:
 ⍝     ×/fun input
 
-⍝ fun uses powersets which produces a large vectors so we do powersets on subsequences
+⍝ "fun" uses powersets which produces a large vectors so we do powersets on subsequences below
 
 sorted←(⊂∘⍋⌷⊢)input
+
 vv1←0,sorted,3+(⍴sorted)⊃sorted ⍝ prepend 0 and append the last item +3
 idxs←3=(1⌽vv1) - vv1   ⍝ these indexes can be the guaranteed break points in the sequence
                        ⍝ because they have to be there
+
 vv2←(1+idxs)/vv1    ⍝  duplicate the break points 
 idxs2←1,1↓¯1⌽0=(1⌽vv2)-vv2  ⍝ get the different between each item and where the difference is 0
                             ⍝ mark those places (as they will serve as the places to partition)
