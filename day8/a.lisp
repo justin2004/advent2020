@@ -48,7 +48,7 @@
 ; you have to manually change between 'nop' and 'jmp' as needed
 (april "modifyProgram←{idx←⍺
                        memory←⍵
-                       {{(⊂'nop'), idx 2⊃memory}⍣(idx=⍵)⊢memory[⍵]}¨⍳⍴memory }"); april BUG i think -- idx can't be ⍵ but they are the same
+                       {{(⊂'nop'), idx 2⊃memory}⍣(idx=⍵)⊢memory[⍵]}¨⍳⍴memory }")
 ; (april "1 modifyProgram memory") ; example call
 (april "programs←{⍵ modifyProgram memory}¨idxsOfNops")
 (april "programs←{⍵ modifyProgram memory}¨idxsOfJmps")
