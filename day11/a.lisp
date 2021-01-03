@@ -2,7 +2,7 @@
 (ql:quickload :april)
 (in-package :april)
 
-(setf *i* (with-open-file (s "day11/input-sample.txt" 
+(setf *i* (with-open-file (s "day11/input.txt" 
                              :direction :input)
             (loop 
               :for line = (read-line s nil)
@@ -45,17 +45,46 @@
 ; (april-f "m←↑¯2+{'.L#'⍳⍵}¨input")
 (april-f "+/[1]¯1 0 1 ⌽¨ ⊂m")
 
+(april-f "(2 5) ↑ m")
 
+(april "doround←{
+⍝ biginput←11 11↑⍵
+biginput←(1 + ⍴⍵) ↑⍵
+⍝ biginput[;11]←'.'
+biginput[;(⍴⍵[2])+1]←'.'
+⍝ biginput[11;]←'.'
+biginput[(⍴⍵[1])+1;]←'.'
+seat←'.'≠biginput
+m←'#'=biginput
+adjCount←  ⊃+/+/[1]¯1 0 1 ∘.⊖ ¯1 0 1 ⌽¨ ⊂m
+realAdjCount←adjCount-m
+notOcc←0=m
+new←m
+new←new ∨ seat ∧ (0=realAdjCount) ∧  notOcc
+new←0⌈new - seat ∧ (3<realAdjCount) ∧ ~notOcc
+(⍴⍵)↑'L#.'[1+(2×~seat) + new]}")
+
+(april "+/+/'#'=doround⍣≡↑input")
+
+(april "(doround⍣2 ↑input) = doround doround doround ↑input ")
+(april "doround ⍣3 ↑input")
+(april "i←↑input")
+(april "⍴↑input")
+(april "⍴↑input")
+
+; 1 +∘÷⍣= 1  
 
 ; start
-(april "biginput←11 11↑↑input")
+(april "biginput←11 11↑↑input") ; need an insulating row and col (of floor)
 (april "biginput[;11]←'.'")
 (april "biginput[11;]←'.'")
+(april "seat←'.'≠biginput") ; a seat
+; (april "biginput←11 11↑'#'=↑input") ; need an insulating row and col (of floor)
+
 (april "biginput")
 (april "m←'#'=biginput") ; occupied
 (april "m←'#'=new") ; 2nd pass
 (april "m←new") ; 2nd pass with numerics
-(april "seat←'.'≠biginput") ; a seat
 
 
 ; If a seat is empty (L) and there are no occupied seats adjacent to it, the seat becomes occupied.
@@ -77,7 +106,9 @@
 (april "new-new∧seat")
 (april "~seat")
 ; should i turn off the non-seats?
-(april-f "'L#.'[1+(2×~seat) + new]"); render works
+(april-f "10 10↑'L#.'[1+(2×~seat) + new]"); render works
+;done
+
 (april-f "                    new "); render works
 (april-f "1+new+s")
 (april "4 ∧ 2")
