@@ -2,7 +2,7 @@
 (ql:quickload :april)
 (in-package :april)
 
-(setf *i* (with-open-file (s "day11/input.txt" 
+(setf *i* (with-open-file (s "day11/input-sample.txt" 
                              :direction :input)
             (loop 
               :for line = (read-line s nil)
@@ -12,8 +12,8 @@
 
 ; get the input into april
 (april (with (:state :in 
-              ((i (apl-format-array (coerce *i*
-                                             'vector))))) )
+              ((i (coerce *i*
+                                             'vector)))) )
        "input←i")
 (april "'.'=¨input ") ; this
 
@@ -64,15 +64,9 @@ new←new ∨ seat ∧ (0=realAdjCount) ∧  notOcc
 new←0⌈new - seat ∧ (3<realAdjCount) ∧ ~notOcc
 (⍴⍵)↑'L#.'[1+(2×~seat) + new]}")
 
+; this solves part 1
 (april "+/+/'#'=doround⍣≡↑input")
 
-(april "(doround⍣2 ↑input) = doround doround doround ↑input ")
-(april "doround ⍣3 ↑input")
-(april "i←↑input")
-(april "⍴↑input")
-(april "⍴↑input")
-
-; 1 +∘÷⍣= 1  
 
 ; start
 (april "biginput←11 11↑↑input") ; need an insulating row and col (of floor)
@@ -93,6 +87,7 @@ new←0⌈new - seat ∧ (3<realAdjCount) ∧ ~notOcc
 
 (april-f "adjCount←  ⊃+/+/[1]¯1 0 1 ∘.⊖ ¯1 0 1 ⌽¨ ⊂m") 
 (april-f            "⊃+/+/[1]¯1 0 1 ∘.⊖ ¯1 0 1 ⌽¨ ⊂m")
+(april              "                   ¯1 0 1 ⌽¨ ⊂m")
 (april "m")
 (april "realAdjCount←adjCount-m") ; real adjacent (since the seat itself adjacent to itself)
 
@@ -114,7 +109,7 @@ new←0⌈new - seat ∧ (3<realAdjCount) ∧ ~notOcc
 (april "4 ∧ 2")
 (april "⎕←zz←5 5 ⍴ 0")
 (april "m←(∘.=⍨⍳5)")
-(april "m")
+(april-f "m")
 ; 0 L empty
 ; 1 # occupied
 ; then at the end use the seat mask
@@ -128,6 +123,66 @@ new←0⌈new - seat ∧ (3<realAdjCount) ∧ ~notOcc
 
 
 
-(april "m←4 4 ⍴ ⍳ 4")
-(april "(2 2 ⌷m)←99")
-(april "m")
+; part 2 prep
+; 0 floor
+; 1 empty chair
+; 2 occupied char
+; as soon as you hit a positive number that answers the question
+(april "v←0 0 0 1 0 0 0 2 0")
+(april "v←0 0 0 0 0 0 0 0 0")
+(april "1↑v/⍨0≠v") ; first non-floor thing
+(april "fnft←{1↑⍵/⍨0≠⍵}") ; first non-floor thing
+;;;; 
+(april "M←10 10 ⍴ 0 ⋄ M[3;4]←1 ⋄ M[3;1]←1")
+(april "N←10 10 ⍴ 0 ⋄ N[3;6]←2 ⋄ N[3;4]←1 ") ; seat
+(april "⎕←N")
+(april "⎕←⍉↑⊃∘fnft¨¨↓(⍳9) ∘.↓ ↓N") ; works to the right 
+(april "M")
+(april "N")
+(april "+/[1]M")
+; Mv (f⍤1)Nm     Apply f between vector Mv and each row of Nm)
+(april "(+/⍤1)M")
+(april "+/M")
+(april "+/[1]M")
+(april "M")
+
+; (⍋⍤1) cmat    ⍝ grade-up by row)
+(april "⎕←cmat←2 3 ⍴ 'abczyx'")
+(april "⎕←(⍋⍤1) cmat")
+
+; Mv (f⍤0 1)Nm   Apply f between vector Mv and each column of Nm)
+(april "2(+⍤0 1)M")
+(april "1(+⍤1)M")
+
+(april "∨/1⌽M") ; positive pulls
+; need pulls 1 - 9 so i need append, rotate(pull)), then take
+(april "∨/10 10↑4⌽M,10 9 ⍴ 0")
+(april "10 10↑4⌽M,10 9 ⍴ 0")
+
+(april "      4⌽M,10 9 ⍴ 0")
+(april " 10 10 ↑[2 3](⍳9)∘.⌽M,10 9 ⍴ 0") ; would work in dyalog
+(april "            ⍴(⍳9)∘.⌽M,10 9 ⍴ 0")
+(april "(⍳4)∘.+8")
+
+(april "cube←3 4 5 ⍴ ⍳20 ⍝ vol row col")
+(april "cube")
+(april "2 2↑[2 3] cube")
+(april-f "2 2↑     cube")
+
+(april "3 3↑4 5 ⍴ ⍳20")
+
+
+; from andrew
+(april "m←10 5 ⍴ ⍳10")
+(april "{{⍵,⌽⍵} (0,-⊢/⍴⍵)↓⍵} m")
+(april "{{⍵,⌽⍵} (0,-⊢/⍴⍵)↑⍵} m")
+(april "{⍵,⌽⍵} m")
+(april "{(0,-⊢/⍴⍵)↓⍵} m")
+(april "0,-⊢/⍴m")
+(april "-⊢/⍴m")
+(april "{{⍵,⌽⍵} (0,⊢/⍴⍵)↑⍵} m")
+(april "(0,-⊢/⍴m)↓m")
+(april "10↓m")
+(april "0,-⊢/⍴m")
+(april "m←100× 10 10 ⍴ ⍳5 ")
+(april "{{⍵,⌽⍵} (0,⊢/⍴⍵)↑⍵} m")
