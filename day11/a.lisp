@@ -1,6 +1,11 @@
 (declaim (optimize (speed 0) (safety 3) (debug 3)))
+(ql:quickload :bordeaux-threads)
+(ql:system-apropos "threads")
 (ql:quickload :april)
 (in-package :april)
+
+; my solution works with the small sample but it does not finish with the real input
+;   :/  
 
 (setf *i* (with-open-file (s "day11/input.txt" 
                              :direction :input)
@@ -69,7 +74,7 @@ new←0⌈new - seat ∧ (3<realAdjCount) ∧ ~notOcc
 
 
 ; p 2?
-(april "doround←{
+(april  "doround←{
 ⎕←⎕TS
 seat←'.'≠⍵
 m←{¯1+'.L#'⍳⍵}¨⍵     ⍝ .=0   L=1   #=2
@@ -108,6 +113,13 @@ emasked←existing × 0=new
 (april-f "                   doround doround doround ↑input")
 (april-f "+/+/'#'=doround⍣≡↑input") ; part 2
 (april "doround ↑input")
+(setf *thr* 
+      (bt:make-thread #'(lambda () (progn
+                                     (format #.*standard-output* "hi") 55)) ))
+(bt:thread-alive-p *thr*)
+(setf *thr* 
+      (bt:make-thread #'(lambda () (april (with (:state :print-to #.*standard-output*)) "+/+/'#'=doround⍣≡↑input") ) ))
+
 (april-f "↑input")
 (april "'.L#'⍳¨↓N")
 (april "'.L#'⍳1⊃↓N")
